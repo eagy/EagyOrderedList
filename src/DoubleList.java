@@ -1,7 +1,8 @@
 
 public class DoubleList<T> implements ListADT<T>{
-	private DoubleNode<T> head, tail;
-	private int count;
+	protected DoubleNode<T> head;
+	protected DoubleNode<T> tail;
+	protected int count;
 	
 	/**
 	 * Initializes the Doublelist. 
@@ -116,6 +117,23 @@ public class DoubleList<T> implements ListADT<T>{
 	public int size() {
 		// TODO Auto-generated method stub
 		return count;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		if(isEmpty())
+			return null;
+		else {
+			String result = "";
+			DoubleNode<T> temp = head; 
+			while (temp != null) {
+				result += temp.getElement() + " ";
+				temp = temp.getNext();
+			}
+			
+			return result;
+		}
 	}
 
 }

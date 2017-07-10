@@ -7,7 +7,7 @@
 public class Driver {
     public static void main(String [] args) {
         DoubleOrderedList<Integer> list = new DoubleOrderedList<>();
-        
+        DoubleList<Integer> DLList = new DoubleList<>();
         //RA: These are _extremely_ simple tests - do not use them when doing
         //    your writeup.
         
@@ -32,6 +32,7 @@ public class Driver {
         list.removeLast();
         
         System.out.println(list);
+        
         
         /* Test Results:
             1 3 7 9 13 14 16 17 23 24 

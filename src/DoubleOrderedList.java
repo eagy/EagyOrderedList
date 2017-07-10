@@ -1,57 +1,53 @@
 
-public class DoubleOrderedList<T> implements OrderedListADT<T>{
-
-	@Override
-	public T removeFirst() {
-		// TODO Auto-generated method stub
-		return null;
+public class DoubleOrderedList<T> extends DoubleList<T> implements OrderedListADT<T>{
+	
+	public DoubleOrderedList() {
+		super();
 	}
-
-	@Override
-	public T removeLast() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public T remove(T element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public T first() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public T last() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean contains(T target) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	@Override
 	public void add(T element) {
 		// TODO Auto-generated method stub
+		DoubleNode<T> temp = new DoubleNode<>(element);
+		
+		if(isEmpty())
+			head = tail = temp;
+		else if (head == tail) {
+			if (head.getElement().getClass() != element.getClass())
+				throw new NonComparableElementException("Objects must be of the same class");
+			if(head.getElement().hashCode() > element.hashCode()) {
+				tail = temp;
+				head.setNext(tail);
+				tail.setPrev(head);
+			}
+			else {
+				head = temp;
+				head.setNext(tail);
+				tail.setPrev(head);
+			}
+		}
+		else {
+			DoubleNode<T> iterator = head; 
+			boolean done = false; 
+			
+			while(iterator != null && iterator.getNext() != tail && !done) {
+				if (iterator.getElement().hashCode() < temp.getElement().hashCode()
+						&& iterator.getNext().hashCode() >= temp.getElement().hashCode()) {
+					iterator.getNext().setPrev(temp);
+					temp.setNext(iterator.getNext());
+					iterator.setNext(temp);
+					temp.setPrev(iterator);
+					
+					done = true;
+				}
+				
+				iterator = iterator.getNext();
+			}
+			
+			
+		}
+		
+		count++;
 		
 	}
 
