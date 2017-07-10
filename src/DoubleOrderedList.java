@@ -15,7 +15,7 @@ public class DoubleOrderedList<T> extends DoubleList<T> implements OrderedListAD
 		else if (head == tail) {
 			if (head.getElement().getClass() != element.getClass())
 				throw new NonComparableElementException("Objects must be of the same class");
-			if(head.getElement().hashCode() > element.hashCode()) {
+			if(head.getElement().hashCode() < element.hashCode()) {
 				tail = temp;
 				head.setNext(tail);
 				tail.setPrev(head);
@@ -26,25 +26,36 @@ public class DoubleOrderedList<T> extends DoubleList<T> implements OrderedListAD
 				tail.setPrev(head);
 			}
 		}
+		else if (first().hashCode() < element.hashCode()) {
+			tail.setNext(temp);
+			temp.setPrev(tail);
+			tail = temp;
+			
+		}
+		else if (last().hashCode() > element.hashCode()) {
+			head.setPrev(temp);
+			temp.setNext(head);
+			head = temp;
+		}
 		else {
+			
 			DoubleNode<T> iterator = head; 
 			boolean done = false; 
 			
-			while(iterator != null && iterator.getNext() != tail && !done) {
-				if (iterator.getElement().hashCode() < temp.getElement().hashCode()
-						&& iterator.getNext().hashCode() >= temp.getElement().hashCode()) {
-					iterator.getNext().setPrev(temp);
-					temp.setNext(iterator.getNext());
-					iterator.setNext(temp);
-					temp.setPrev(iterator);
-					
-					done = true;
-				}
-				
-				iterator = iterator.getNext();
+			DoubleNode<T> first = head; 
+			DoubleNode<T> second = head.getNext();
+			
+			while (second != null) {
+				if(element.hashCode() < second.getElement().hashCode())
+					break;
+				first = second; 
+				second = second.getNext();
 			}
 			
-			
+			temp.setNext(first.getNext());
+			temp.setPrev(first);
+			first.setNext(temp);
+			first.getNext().setPrev(temp);
 		}
 		
 		count++;

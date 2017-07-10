@@ -23,11 +23,13 @@ public class DoubleList<T> implements ListADT<T>{
 			
 			return temp.getElement();
 		}
+		
 		else {
 			DoubleNode<T> temp = tail;
-			temp.setPrev(null);
 			
 			tail = tail.getPrev();
+			tail.setNext(null);
+			temp.setPrev(null);
 			
 			return temp.getElement();
 		}
@@ -36,21 +38,22 @@ public class DoubleList<T> implements ListADT<T>{
 	@Override
 	public T removeLast() {
 		// TODO Auto-generated method stub
+		DoubleNode<T> temp; 
 		if(isEmpty())
 			throw new EmptyCollectionException("There are no elements in the collection");
 		else if (head == tail) {
-			DoubleNode<T> temp = head;
+			temp = head;
 			head = tail = null;
 			
 			return temp.getElement();
 		}
 		else {
-			DoubleNode<T> temp = head;
+			temp = head;
 			
-			temp.setNext(null);
 			
 			head = head.getNext();
 			head.setPrev(null);
+			temp.setNext(null);
 			
 			return temp.getElement();
 		}
@@ -60,16 +63,46 @@ public class DoubleList<T> implements ListADT<T>{
 	public T remove(T element) {
 		// TODO Auto-generated method stub
 		DoubleNode<T> iterator = head; 
-		
-		while(iterator != null) {
-			if(iterator.getElement().equals(element)) {
-				iterator.getPrev().setNext(iterator.getNext());
-				iterator.getNext().setPrev(iterator.getPrev());
-				
-				return iterator.getElement();
-			}
+		DoubleNode<T> temp;
+		if(isEmpty())
+			throw new EmptyCollectionException("There are no elements in the collection.");
+		else if (head == tail) {
+			temp = head; 
 			
-			iterator = iterator.getNext();
+			head = tail = null;
+			
+			return temp.getElement();
+		}
+		else if (head.getElement().equals(element)) {
+			temp = head; 
+			
+			head = head.getNext();
+			head.setPrev(null);
+			temp.setNext(null);
+			
+			return temp.getElement();
+		}
+		else if (tail.getElement().equals(element)) {
+			temp = tail; 
+			 
+			tail = tail.getPrev();
+			tail.setNext(null);
+			temp.setPrev(null);
+			
+			return temp.getElement();
+		}
+		else {
+			while(iterator != null) {
+				if(iterator.getElement().equals(element)) {
+	
+					iterator.getPrev().setNext(iterator.getNext());
+					iterator.getNext().setPrev(iterator.getPrev());
+				
+					return iterator.getElement();
+				}
+				
+				iterator = iterator.getNext();
+			}
 		}
 		
 		throw new ElementNotFoundException("There is no such element in this collection.");

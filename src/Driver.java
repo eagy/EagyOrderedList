@@ -7,7 +7,6 @@
 public class Driver {
     public static void main(String [] args) {
         DoubleOrderedList<Integer> list = new DoubleOrderedList<>();
-        DoubleList<Integer> DLList = new DoubleList<>();
         //RA: These are _extremely_ simple tests - do not use them when doing
         //    your writeup.
         
@@ -24,12 +23,12 @@ public class Driver {
 
         System.out.println(list);
         
-        list.remove(7);
-        list.removeFirst();
-        list.remove(17);
-        list.removeLast();
-        list.remove(14);
-        list.removeLast();
+        list.remove(7);System.out.println(list);
+        list.removeFirst();System.out.println(list);
+        list.remove(17);System.out.println(list);
+        list.removeLast();System.out.println(list);
+        list.remove(14);System.out.println(list);
+        list.removeLast();System.out.println(list);
         
         System.out.println(list);
         
