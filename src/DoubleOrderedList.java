@@ -6,12 +6,14 @@ public class DoubleOrderedList<T> extends DoubleList<T> implements OrderedListAD
 	}
 	
 	@Override
-	public void add(T element) {
+	public void add(T element) throws NonComparableElementException {
 		// TODO Auto-generated method stub
 		if (!(element instanceof Comparable))
-			throw new NonComparableElementException("Objects must be of a comparable type.");
+			throw new NonComparableElementException(getClass().getName());
 		
 		DoubleNode<T> temp = new DoubleNode<>(element);
+		
+		@SuppressWarnings("unchecked")
 		Comparable<T> comp = (Comparable<T>)element;
 		
 		

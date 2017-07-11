@@ -13,10 +13,10 @@ public class DoubleList<T> implements ListADT<T>{
 	}
 	
 	@Override
-	public T removeFirst() {
+	public T removeFirst() throws EmptyCollectionException {
 		// TODO Auto-generated method stub
 		if(isEmpty())
-			throw new EmptyCollectionException("There are no elements in the collection");
+			throw new EmptyCollectionException(getClass().getName());
 		else if (head == tail) {
 			DoubleNode<T> temp = tail;
 			head = tail = null;
@@ -40,11 +40,11 @@ public class DoubleList<T> implements ListADT<T>{
 	}
 
 	@Override
-	public T removeLast() {
+	public T removeLast() throws EmptyCollectionException {
 		// TODO Auto-generated method stub
 		DoubleNode<T> temp; 
 		if(isEmpty())
-			throw new EmptyCollectionException("There are no elements in the collection");
+			throw new EmptyCollectionException(getClass().getName());
 		else if (head == tail) {
 			temp = head;
 			head = tail = null;
@@ -68,13 +68,13 @@ public class DoubleList<T> implements ListADT<T>{
 	}
 
 	@Override
-	public T remove(T element) throws EmptyCollectionException {
+	public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
 		// TODO Auto-generated method stub 
+		if (isEmpty())
+			throw new EmptyCollectionException(getClass().getName());
+	
 		DoubleNode<T> temp;
 		
-		if (isEmpty())
-			throw new EmptyCollectionException("There are no elements in the collection.");
-	
 		DoubleNode<T> previous = null;
 		DoubleNode<T> current = head;
 		boolean found  = false;
@@ -90,7 +90,7 @@ public class DoubleList<T> implements ListADT<T>{
 		}
 		
 		if(!found)
-			throw new ElementNotFoundException("No such element found in the list");
+			throw new ElementNotFoundException(getClass().getName());
 		if (size() == 1)
 			head = tail = null;
 		else if (current.equals(head)) {
@@ -112,19 +112,19 @@ public class DoubleList<T> implements ListADT<T>{
 	}
 
 	@Override
-	public T first() {
+	public T first() throws EmptyCollectionException {
 		// TODO Auto-generated method stub
 		if(isEmpty())
-			throw new EmptyCollectionException("There are no elements in the collection.");
+			throw new EmptyCollectionException(getClass().getName());
 		else
 			return tail.getElement();
 	}
 
 	@Override
-	public T last() {
+	public T last() throws EmptyCollectionException {
 		// TODO Auto-generated method stub
 		if(isEmpty())
-			throw new EmptyCollectionException("There are no elements in the collection.");
+			throw new EmptyCollectionException(getClass().getName());
 		else
 			return head.getElement();
 	}

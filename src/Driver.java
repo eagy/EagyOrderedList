@@ -56,12 +56,39 @@ public class Driver {
         
         try {
         	list.add(1);
-        	list.add('1');
+        	list.add(new DoubleOrderedList());
         }
         catch(NonComparableElementException e) {
         	System.out.println(e);;
         }
     
+        try {
+        	list.remove(2);
+        }
+        catch(ElementNotFoundException e) {
+        	System.out.println(e);
+        }
         
+        try {
+        	list.removeFirst();
+        	list.removeFirst();
+        }
+        catch(EmptyCollectionException e) {
+        	System.out.println(e);
+        }
+        
+        try {
+			System.out.println(list.first());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+        
+        try {
+			System.out.println(list.last());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
     }
 }
