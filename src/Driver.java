@@ -23,12 +23,18 @@ public class Driver {
 
         System.out.println(list);
         
-        list.remove(7);System.out.println(list);
-        list.removeFirst();System.out.println(list);
-        list.remove(17);System.out.println(list);
-        list.removeLast();System.out.println(list);
-        list.remove(14);System.out.println(list);
-        list.removeLast();System.out.println(list);
+        System.out.println(list.remove(7));
+        System.out.println(list);
+        System.out.println(list.removeFirst());
+        System.out.println(list);
+        System.out.println(list.remove(17));
+        System.out.println(list);
+        System.out.println(list.removeLast());
+        System.out.println(list);
+        System.out.println(list.remove(14));
+        System.out.println(list);
+        System.out.println( list.removeLast());
+        System.out.println(list);
         
         System.out.println(list);
         

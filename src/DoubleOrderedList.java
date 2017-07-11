@@ -42,6 +42,7 @@ public class DoubleOrderedList<T> extends DoubleList<T> implements OrderedListAD
 			DoubleNode<T> iterator = head; 
 			boolean done = false; 
 			
+			Comparable<T> comp = (Comparable<T>)element;
 			DoubleNode<T> first = head; 
 			DoubleNode<T> second = head.getNext();
 			
@@ -56,6 +57,7 @@ public class DoubleOrderedList<T> extends DoubleList<T> implements OrderedListAD
 			temp.setPrev(first);
 			first.setNext(temp);
 			first.getNext().setPrev(temp);
+			
 		}
 		
 		count++;

@@ -21,6 +21,8 @@ public class DoubleList<T> implements ListADT<T>{
 			DoubleNode<T> temp = tail;
 			head = tail = null;
 			
+			count--;
+			
 			return temp.getElement();
 		}
 		
@@ -30,6 +32,8 @@ public class DoubleList<T> implements ListADT<T>{
 			tail = tail.getPrev();
 			tail.setNext(null);
 			temp.setPrev(null);
+			
+			count--;
 			
 			return temp.getElement();
 		}
@@ -45,6 +49,8 @@ public class DoubleList<T> implements ListADT<T>{
 			temp = head;
 			head = tail = null;
 			
+			count--;
+			
 			return temp.getElement();
 		}
 		else {
@@ -55,57 +61,54 @@ public class DoubleList<T> implements ListADT<T>{
 			head.setPrev(null);
 			temp.setNext(null);
 			
+			count--;
+			
 			return temp.getElement();
 		}
 	}
 
 	@Override
-	public T remove(T element) {
-		// TODO Auto-generated method stub
-		DoubleNode<T> iterator = head; 
+	public T remove(T element) throws EmptyCollectionException {
+		// TODO Auto-generated method stub 
 		DoubleNode<T> temp;
-		if(isEmpty())
+		
+		if (isEmpty())
 			throw new EmptyCollectionException("There are no elements in the collection.");
-		else if (head == tail) {
-			temp = head; 
-			
-			head = tail = null;
-			
-			return temp.getElement();
-		}
-		else if (head.getElement().equals(element)) {
-			temp = head; 
-			
-			head = head.getNext();
-			head.setPrev(null);
-			temp.setNext(null);
-			
-			return temp.getElement();
-		}
-		else if (tail.getElement().equals(element)) {
-			temp = tail; 
-			 
-			tail = tail.getPrev();
-			tail.setNext(null);
-			temp.setPrev(null);
-			
-			return temp.getElement();
-		}
-		else {
-			while(iterator != null) {
-				if(iterator.getElement().equals(element)) {
 	
-					iterator.getPrev().setNext(iterator.getNext());
-					iterator.getNext().setPrev(iterator.getPrev());
-				
-					return iterator.getElement();
-				}
-				
-				iterator = iterator.getNext();
+		DoubleNode<T> previous = null;
+		DoubleNode<T> current = head;
+		boolean found  = false;
+		
+		while (current != null && !found) {
+			if(element.equals(current.getElement())) 
+				found = true; 
+			else
+			{
+				previous = current;
+				current = current.getNext();
 			}
 		}
 		
-		throw new ElementNotFoundException("There is no such element in this collection.");
+		if(!found)
+			throw new ElementNotFoundException("No such element found in the list");
+		if (size() == 1)
+			head = tail = null;
+		else if (current.equals(head)) {
+			head.setPrev(current.getNext());
+			head = current.getNext();
+		}
+		else if(current.equals(tail)) {
+			tail = previous;
+			tail.setPrev(previous);
+			tail.setNext(null);
+		}
+		else 
+			previous.setNext(current.getNext());
+		
+		count--;
+		
+		return current.getElement();
+		
 	}
 
 	@Override
