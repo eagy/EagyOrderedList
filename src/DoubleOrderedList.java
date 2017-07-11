@@ -8,49 +8,38 @@ public class DoubleOrderedList<T> extends DoubleList<T> implements OrderedListAD
 	@Override
 	public void add(T element) {
 		// TODO Auto-generated method stub
+		if (!(element instanceof Comparable))
+			throw new NonComparableElementException("Objects must be of a comparable type.");
+		
 		DoubleNode<T> temp = new DoubleNode<>(element);
+		Comparable<T> comp = (Comparable<T>)element;
+		
 		
 		if(isEmpty())
 			head = tail = temp;
-		else if (head == tail) {
-			if (head.getElement().getClass() != element.getClass())
-				throw new NonComparableElementException("Objects must be of the same class");
-			if(head.getElement().hashCode() < element.hashCode()) {
-				tail = temp;
-				head.setNext(tail);
-				tail.setPrev(head);
-			}
-			else {
-				head = temp;
-				head.setNext(tail);
-				tail.setPrev(head);
-			}
-		}
-		else if (first().hashCode() < element.hashCode()) {
+		else if (comp.compareTo(first()) > 0) {
 			tail.setNext(temp);
 			temp.setPrev(tail);
 			tail = temp;
 			
 		}
-		else if (last().hashCode() > element.hashCode()) {
+		else if (comp.compareTo(last()) < 0) {
 			head.setPrev(temp);
 			temp.setNext(head);
 			head = temp;
 		}
 		else {
-			
-			DoubleNode<T> iterator = head; 
-			boolean done = false; 
-			
-			Comparable<T> comp = (Comparable<T>)element;
+			boolean done = false; 			
 			DoubleNode<T> first = head; 
 			DoubleNode<T> second = head.getNext();
 			
-			while (second != null) {
-				if(element.hashCode() < second.getElement().hashCode())
-					break;
-				first = second; 
-				second = second.getNext();
+			while (second != null && !done) {
+				if(comp.compareTo(second.getElement())<0)
+					done = true;
+				else {
+					first = second; 
+					second = second.getNext();
+				}
 			}
 			
 			temp.setNext(first.getNext());
