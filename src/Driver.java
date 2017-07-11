@@ -6,7 +6,7 @@
  */
 public class Driver {
     public static void main(String [] args) {
-        DoubleOrderedList<Integer> list = new DoubleOrderedList<>();
+        DoubleOrderedList list = new DoubleOrderedList<>();
         //RA: These are _extremely_ simple tests - do not use them when doing
         //    your writeup.
         
@@ -43,5 +43,25 @@ public class Driver {
             1 3 7 9 13 14 16 17 23 24 
             3 9 13 16 
         */
+        
+        // My Tests
+        
+        System.out.println("My tests:" );
+        list = new DoubleOrderedList<>();
+        
+        list.add(1);
+        System.out.println(list.removeFirst());
+        list.add(2);
+        System.out.println(list.removeLast());
+        
+        try {
+        	list.add(1);
+        	list.add('1');
+        }
+        catch(NonComparableElementException e) {
+        	System.out.println(e);;
+        }
+    
+        
     }
 }
